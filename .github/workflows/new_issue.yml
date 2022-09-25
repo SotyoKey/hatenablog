@@ -11,8 +11,6 @@ jobs:
       ISSUE_NUM: ${{ github.event.issue.number }}
       ISSUE_TITLE: ${{ github.event.issue.title }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      AWS_OIDC_ROLE_ARN: ${{ secrets.AWS_OIDC_ROLE_ARN }}
-      AWS_REGION: ap-northeast-1
     permissions:
       id-token: write
       issues: write
@@ -52,28 +50,12 @@ jobs:
           )
           echo "::set-output name=merged_linked_pr_length::$merged_linked_pr_length"
 
-      - name: Assume Role
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE_ARN }}
-          aws-region: ${{env.AWS_REGION}}
-
       - name: Create files
         if: steps.get_merged_linked_pr.outputs.merged_linked_pr_length == 0
         run: |
-          generated_post_name=$(aws translate translate-text \
-            --text "${ISSUE_TITLE}" \
-            --source-language-code ja \
-            --target-language-code en)
-          generated_post_name=$(echo $generated_post_name | \
-            jq -r '.TranslatedText' | \
-            sed -e 's/ /-/g' -e 's/[^a-zA-Z0-9-]//g' | \
-            tr '[:upper:]' '[:lower:]',,)
           mkdir $ISSUE_NUM
           echo -e "こんにちは、CX事業本部 IoT事業部の若槻です。\n\n今回は、${ISSUE_TITLE}\n\n## おわりに\n\n\n\n## 参考\n\n\n\n以上" \
             >> $ISSUE_NUM/article.md
-          echo -e "{\n  \"postName\": \"${generated_post_name}\",\n  \"title\": \"${ISSUE_TITLE}\",\n  \"description\": \"\"\n}" \
-            >> $ISSUE_NUM/config.json
 
       - name: Reopen issue
         if: ${{ github.event.issue.state }} == "closed"
