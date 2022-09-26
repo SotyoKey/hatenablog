@@ -31,7 +31,7 @@ jobs:
       - name: Create files
         run: |
           mkdir $ISSUE_NUM
-          echo -e "---\nTitle:  #{ISSUE_TITLE}"\n---\n\n本文\
+          echo -e "---\nTitle:  #{ISSUE_TITLE}\n---\n\n本文" \
             >> ${ISSUE_NUM}/blog.md
 
       - name: Define new branch name
