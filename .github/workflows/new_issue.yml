@@ -31,7 +31,6 @@ jobs:
           BLOGSYNC_VER: v0.10.2
         run: |
           brew install Songmu/tap/blogsync
-          sudo chown -R $(id -u):$(id -g) /home/linuxbrew/.linuxbrew/bin/blogsync
         
       - name: Create files
         run: |
@@ -63,5 +62,5 @@ jobs:
           
       - name: post new entry
         run: |
-          echo | blogsync post --draft $ISSUE_NUM/blog.md
+          echo | sudo blogsync post --draft $ISSUE_NUM/blog.md
           
