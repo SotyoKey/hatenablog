@@ -26,10 +26,7 @@ jobs:
         run: |
           brew update
           brew install Songmu/tap/blogsync
-          user=$(whoami)
-          echo ${user}
-          ls -lha /home/linuxbrew/.linuxbrew/Cellar/blogsync/0.12.1/bin
-          chown -R ${user} /home/linuxbrew/.linuxbrew/bin/blogsync
+          chmod 555 /home/linuxbrew/.linuxbrew/Cellar/blogsync/0.12.1/bin/blogsync
         
       - name: Create files
         run: |
