@@ -26,6 +26,7 @@ jobs:
         run: |
           brew update
           brew install Songmu/tap/blogsync
+          chown -R runner /home/linuxbrew/.linuxbrew/bin/blogsync
         
       - name: Create files
         run: |
@@ -50,7 +51,7 @@ jobs:
             --head $NEW_BRANCH_NAME \
             --base $BASE_BRANCH_NAME \
             --title "$ISSUE_TITLE" \
-            --body "close #${ISSUE_NUM}"
+            --body "issue #${ISSUE_NUM}"
         env:
           NEW_BRANCH_NAME: ${{ steps.define_new_branch_name.outputs.new_branch_name }}
           BASE_BRANCH_NAME: ${{ github.event.repository.default_branch }}
