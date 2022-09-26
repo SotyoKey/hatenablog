@@ -22,11 +22,11 @@ jobs:
         
       - name: Setup blogsync
         env:
-          BLOGSYNC_VER: v0.10.2
+          BLOGSYNC_VER: v0.12.1
         run: |
-          brew update
-          brew install Songmu/tap/blogsync
-          chmod 555 /home/linuxbrew/.linuxbrew/Cellar/blogsync/0.12.1/bin/blogsync
+         mkdir bin
+          curl --location --output blogsync.tar.gz --remote-name https://github.com/motemen/blogsync/releases/download/${BLOGSYNC_VER}/blogsync_${BLOGSYNC_VER}_linux_amd64.tar.gz
+          tar zxf blogsync.tar.gz -C bin --strip-component 1 blogsync_${BLOGSYNC_VER}_linux_amd64/blogsync
         
       - name: Create files
         run: |
