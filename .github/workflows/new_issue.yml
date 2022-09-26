@@ -31,6 +31,7 @@ jobs:
           BLOGSYNC_VER: v0.10.2
         run: |
           brew install Songmu/tap/blogsync
+          sudo chown -R /home/linuxbrew/.linuxbrew/bin/blogsync
         
       - name: Create files
         run: |
