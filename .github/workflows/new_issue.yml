@@ -20,16 +20,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v1
-        
-      - name: Install dependencies
-        run: npm install
-        
       - name: Setup blogsync
         env:
           BLOGSYNC_VER: v0.10.2
         run: |
+          brew update
           brew install Songmu/tap/blogsync
         
       - name: Create files
@@ -62,5 +57,5 @@ jobs:
           
       - name: post new entry
         run: |
-          echo | sudo blogsync post --draft $ISSUE_NUM/blog.md
+          echo | blogsync post --draft $ISSUE_NUM/blog.md
           
