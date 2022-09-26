@@ -30,9 +30,7 @@ jobs:
         env:
           BLOGSYNC_VER: v0.10.2
         run: |
-          mkdir bin
-          curl --location --output blogsync.tar.gz --remote-name https://github.com/motemen/blogsync/releases/download/${BLOGSYNC_VER}/blogsync_${BLOGSYNC_VER}_linux_amd64.tar.gz
-          tar zxf blogsync.tar.gz -C bin --strip-component 1 blogsync_${BLOGSYNC_VER}_linux_amd64/blogsync
+          brew install Songmu/tap/blogsync
         
       - name: Create files
         run: |
