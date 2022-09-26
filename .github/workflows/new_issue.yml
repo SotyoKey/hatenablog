@@ -58,5 +58,6 @@ jobs:
           
       - name: post new entry
         run: |
-          echo | bin/blogsync post --draft sotyo-gbf.hatenablog.com2 < ${ISSUE_NUM}/blog.md
+          export BLOGURL=sotyo-gbf.hatenablog.com
+          echo | bin/blogsync post --draft ${BLOGURL} < ${ISSUE_NUM}/blog.md
           
