@@ -1,5 +1,5 @@
 sotyo-gbf.hatenablog.com:
   username: sotyo_gbf
   password: f8kpzul4cx
-  local_root: //blog/
+  local_root: /home/blog/
   omit_domain: true
