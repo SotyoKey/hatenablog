@@ -31,8 +31,8 @@ jobs:
       - name: Create files
         run: |
           mkdir $ISSUE_NUM
-          echo -e "blog執筆用のデフォルトファイルを配置" \
-            >> $ISSUE_NUM/blog.md
+          echo -e "---\nTitle:  #{ISSUE_TITLE}"\n---\n\n本文\
+            >> ${ISSUE_NUM}/blog.md
 
       - name: Define new branch name
         id: define_new_branch_name
@@ -58,5 +58,5 @@ jobs:
           
       - name: post new entry
         run: |
-          echo | blogsync post --draft $ISSUE_NUM/blog.md
+          echo | blogsync post --draft sotyo-gbf.hatenablog.com ${ISSUE_NUM}/blog.md
           
