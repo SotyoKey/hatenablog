@@ -26,7 +26,8 @@ jobs:
         run: |
           brew update
           brew install Songmu/tap/blogsync
-          chown -R runner /home/linuxbrew/.linuxbrew/bin/blogsync
+          echo | user = whoami
+          chown -R $(user) /home/linuxbrew/.linuxbrew/bin/blogsync
         
       - name: Create files
         run: |
