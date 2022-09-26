@@ -27,9 +27,8 @@ jobs:
          mkdir bin
           curl --location --output blogsync.tar.gz --remote-name https://github.com/motemen/blogsync/releases/download/${BLOGSYNC_VER}/blogsync_${BLOGSYNC_VER}_linux_amd64.tar.gz
           tar zxf blogsync.tar.gz -C bin --strip-component 1 blogsync_${BLOGSYNC_VER}_linux_amd64/blogsync
-      
-      - name: append blogsync path to PATH
-        run: echo "::add-path::./bin"
+          ls bin/
+          ls blogsync_${BLOGSYNC_VER}_linux_amd64/
       
       - name: Create files
         run: |
@@ -61,5 +60,5 @@ jobs:
           
       - name: post new entry
         run: |
-          echo | blogsync post --draft sotyo-gbf.hatenablog.com ${ISSUE_NUM}/blog.md
+          echo | bin/blogsync post --draft sotyo-gbf.hatenablog.com ${ISSUE_NUM}/blog.md
           
