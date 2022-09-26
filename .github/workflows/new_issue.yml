@@ -58,5 +58,5 @@ jobs:
           
       - name: post new entry
         run: |
-          echo | bin/blogsync post --draft sotyo-gbf.hatenablog.com < ${ISSUE_NUM}/blog.md
+          echo | bin/blogsync post --draft sotyo-gbf.hatenablog.com2 < ${ISSUE_NUM}/blog.md
           
