@@ -26,6 +26,11 @@ jobs:
         run: |
           new_branch_name=$(echo "blog_${ISSUE_NUM}")
           echo "::set-output name=new_branch_name::$new_branch_name"
+          
+      - name: Create branch
+        uses: EndBug/add-and-commit@v9
+        with:
+          new_branch: ${{ steps.define_new_branch_name.outputs.new_branch_name }}
    
       - name: Setup blogsync
         env:
@@ -37,19 +42,20 @@ jobs:
 
       - name: append blogsync path to PATH
         run: echo "./bin" >> $GITHUB_PATH          
-               
-      - name: Create branch
-        uses: EndBug/add-and-commit@v9
-        with:
-          new_branch: ${{ steps.define_new_branch_name.outputs.new_branch_name }}
-     
+                   
       - name: post new entry
         run: |
-          bin/blogsync post --draft --title=tst ${BLOG_URL}
+          bin/blogsync post --draft --title=tst --custom-path=${ISSUE_NUM} ${BLOG_URL}
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
           BLOG_URL: 'sotyo-gbf.hatenablog.com'
+          
+      - name: commit
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: '${ISSUE_NUM}.md'
+          commit: --singoff
                   
       - name: Create PR
         run: |
