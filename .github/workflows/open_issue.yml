@@ -47,6 +47,7 @@ jobs:
       - name: post new entry
         run: |
           bin/blogsync post --draft --title=tst --custom-path=${ISSUE_NUM} ${BLOG_DOMAIN}
+          echo '${BLOG_URL}.md'
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
@@ -55,7 +56,6 @@ jobs:
       - name: commit
         uses: EndBug/add-and-commit@v9
         with:
-          add: '${{ BLOG_URL }}.md'
           commit: --singoff
         env:
           FILE_PATH: "entry/${ISSUE_NUM}.md"
