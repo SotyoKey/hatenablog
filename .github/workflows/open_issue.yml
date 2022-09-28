@@ -57,7 +57,10 @@ jobs:
           tar zxf blogsync.tar.gz -C bin --strip-component 1 blogsync_${BLOGSYNC_VER}_linux_amd64/blogsync
           
       - name: post new entry
+        env:
+          BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
+          BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
+          BLOG_URL: "sotyo-gbf.hatenablog.com"
         run: |
-          export BLOGURL=sotyo-gbf.hatenablog.com
           bin/blogsync post --draft ${BLOGURL} < ${ISSUE_NUM}/blog.md
           
