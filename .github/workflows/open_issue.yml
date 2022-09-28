@@ -27,7 +27,6 @@ jobs:
          mkdir bin
           curl --location --output blogsync.tar.gz --remote-name https://github.com/motemen/blogsync/releases/download/${BLOGSYNC_VER}/blogsync_${BLOGSYNC_VER}_linux_amd64.tar.gz
           tar zxf blogsync.tar.gz -C bin --strip-component 1 blogsync_${BLOGSYNC_VER}_linux_amd64/blogsync
-          cp -r .config ~/
       
       - name: Create files
         run: |
@@ -45,6 +44,7 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           new_branch: ${{ steps.define_new_branch_name.outputs.new_branch_name }}
+          add: "#{ISSUE_NUM}/blog.md"
 
       - name: Create PR
         run: |
