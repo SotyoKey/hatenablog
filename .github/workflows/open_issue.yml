@@ -11,6 +11,7 @@ jobs:
       ISSUE_NUM: ${{ github.event.issue.number }}
       ISSUE_TITLE: ${{ github.event.issue.title }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      BLOG_URL: 'entry/${ISSUE_TITLE}'
       TZ: 'Asia/Tokyo'
     permissions:
       id-token: write
@@ -45,16 +46,16 @@ jobs:
                    
       - name: post new entry
         run: |
-          bin/blogsync post --draft --title=tst --custom-path=${ISSUE_NUM} ${BLOG_URL}
+          bin/blogsync post --draft --title=tst --custom-path=${ISSUE_NUM} ${BLOG_DOMAIN}
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
-          BLOG_URL: 'sotyo-gbf.hatenablog.com'
+          BLOG_DOMAIN: 'sotyo-gbf.hatenablog.com'
           
       - name: commit
         uses: EndBug/add-and-commit@v9
         with:
-          add: $FILE_PATH
+          add: '${{ BLOG_URL }}.md'
           commit: --singoff
         env:
           FILE_PATH: "entry/${ISSUE_NUM}.md"
