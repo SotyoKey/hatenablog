@@ -30,7 +30,7 @@ jobs:
       - name: Define new blog file path
         id: define_new_blog_file_path
         run: |
-          blog_file_path=$(echo "entry/#{ISSUE_TITLE}.md")
+          blog_file_path=$(echo "entry/${ISSUE_TITLE}.md")
           echo "::set-output name=blog_file_path::$blog_file_path"
           
       - name: Create branch
