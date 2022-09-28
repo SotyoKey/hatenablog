@@ -62,5 +62,5 @@ jobs:
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
           BLOG_URL: "sotyo-gbf.hatenablog.com"
         run: |
-          bin/blogsync post --draft ${BLOGURL} < ${ISSUE_NUM}/blog.md
+          bin/blogsync post --draft ${BLOGURL}
           
