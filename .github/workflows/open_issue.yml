@@ -54,7 +54,7 @@ jobs:
       - name: commit
         uses: EndBug/add-and-commit@v9
         with:
-          add: entry/${{ ISSUE_NUM }}
+          add: entry/$ISSUE_NUM
           commit: --singoff
                   
       - name: Create PR
