@@ -44,12 +44,12 @@ jobs:
           new_branch: ${{ steps.define_new_branch_name.outputs.new_branch_name }}
      
       - name: post new entry
+        run: |
+          bin/blogsync post --draft --title=tst ${BLOG_URL}
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
           BLOG_URL: 'sotyo-gbf.hatenablog.com'
-        run: |
-          bin/blogsync post --draft --title=tst ${BLOG_URL}
                   
       - name: Create PR
         run: |
