@@ -49,7 +49,7 @@ jobs:
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
           BLOG_URL: 'sotyo-gbf.hatenablog.com'
         run: |
-          bin/blogsync post --draft --title=tst --custom-path=blog ${BLOG_URL}
+          bin/blogsync post --draft --title=tst ${BLOG_URL}
                   
       - name: Create PR
         run: |
