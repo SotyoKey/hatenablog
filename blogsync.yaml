@@ -1,3 +1,4 @@
 sotyo-gbf.hatenablog.com:
 default:
   local_root: ./
+  omit_domain: true
