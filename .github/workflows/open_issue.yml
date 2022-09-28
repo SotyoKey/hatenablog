@@ -19,33 +19,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
-      - name: Setup blogsync
-        env:
-          BLOGSYNC_VER: v0.12.1
-        run: |
-         mkdir bin
-          curl --location --output blogsync.tar.gz --remote-name https://github.com/motemen/blogsync/releases/download/${BLOGSYNC_VER}/blogsync_${BLOGSYNC_VER}_linux_amd64.tar.gz
-          tar zxf blogsync.tar.gz -C bin --strip-component 1 blogsync_${BLOGSYNC_VER}_linux_amd64/blogsync
-      
-      - name: Create files
-        run: |
-          mkdir $ISSUE_NUM
-          echo -e "---\nTitle:  ${ISSUE_TITLE}\n---\n\n本文" \
-            >> ${ISSUE_NUM}/blog.md
-
+              
       - name: Define new branch name
         id: define_new_branch_name
         run: |
           new_branch_name=$(echo "blog_${ISSUE_NUM}")
           echo "::set-output name=new_branch_name::$new_branch_name"
 
+      - name: Create files
+        run: |
+          mkdir $ISSUE_NUM
+          echo -e "---\nTitle:  ${ISSUE_TITLE}\n---\n\n本文" \
+            >> ${ISSUE_NUM}/blog.md
+
       - name: Create branch
         uses: EndBug/add-and-commit@v9
         with:
           new_branch: ${{ steps.define_new_branch_name.outputs.new_branch_name }}
-          add: "${ISSUE_NUM}/blog.md"
-
+          
       - name: Create PR
         run: |
           gh pr create \
@@ -56,6 +47,14 @@ jobs:
         env:
           NEW_BRANCH_NAME: ${{ steps.define_new_branch_name.outputs.new_branch_name }}
           BASE_BRANCH_NAME: ${{ github.event.repository.default_branch }}
+          
+      - name: Setup blogsync
+        env:
+          BLOGSYNC_VER: v0.12.1
+        run: |
+         mkdir bin
+          curl --location --output blogsync.tar.gz --remote-name https://github.com/motemen/blogsync/releases/download/${BLOGSYNC_VER}/blogsync_${BLOGSYNC_VER}_linux_amd64.tar.gz
+          tar zxf blogsync.tar.gz -C bin --strip-component 1 blogsync_${BLOGSYNC_VER}_linux_amd64/blogsync
           
       - name: post new entry
         run: |
