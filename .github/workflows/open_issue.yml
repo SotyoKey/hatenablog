@@ -46,9 +46,7 @@ jobs:
       - name: post new entry
         id: post_new_entry
         run: |
-          echo | bin/blogsync post --draft --title=${ISSUE_TITLE} --custom-path=${ISSUE_TITLE} ${BLOG_DOMAIN} | tail -1 | awk '{ print $1 }'
-          echo ${blog_file_path}
-          echo "::set-output name=blog_file_path::$blog_file_path"
+          bin/blogsync post --draft --title=${ISSUE_TITLE} --custom-path=${ISSUE_TITLE} ${BLOG_DOMAIN}
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
@@ -57,7 +55,7 @@ jobs:
       - name: commit
         uses: EndBug/add-and-commit@v9
         with:
-          add: ${{ steps.post_new_entry.outputs.blog_file_path }}
+          add: "entry/*.md"
           commit: --singoff
                   
       - name: Create PR
