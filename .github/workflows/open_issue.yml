@@ -11,7 +11,6 @@ jobs:
       ISSUE_NUM: ${{ github.event.issue.number }}
       ISSUE_TITLE: ${{ github.event.issue.title }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      BLOG_URL: "entry/${ISSUE_TITLE}"
       TZ: 'Asia/Tokyo'
     permissions:
       id-token: write
@@ -27,6 +26,12 @@ jobs:
         run: |
           new_branch_name=$(echo "blog_${ISSUE_NUM}")
           echo "::set-output name=new_branch_name::$new_branch_name"
+          
+      - name: Define new blog file path
+        id: define_new_blog_file_path
+        run: |
+          blog_file_path=$(echo "entry/#{ISSUE_TITLE}.md")
+          echo "::set-output name=blog_file_path::$blog_file_path"
           
       - name: Create branch
         uses: EndBug/add-and-commit@v9
@@ -56,9 +61,8 @@ jobs:
       - name: commit
         uses: EndBug/add-and-commit@v9
         with:
+          add: ${{ steps.define_new_blog_file_path.outputs.blog_file_path }}
           commit: --singoff
-        env:
-          FILE_PATH: "entry/${ISSUE_NUM}.md"
                   
       - name: Create PR
         run: |
