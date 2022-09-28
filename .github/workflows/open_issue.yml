@@ -31,7 +31,7 @@ jobs:
       - name: Create files
         run: |
           mkdir $ISSUE_NUM
-          echo -e "---\nTitle:  #{ISSUE_TITLE}\n---\n\n本文" \
+          echo -e "---\nTitle:  ${ISSUE_TITLE}\n---\n\n本文" \
             >> ${ISSUE_NUM}/blog.md
 
       - name: Define new branch name
@@ -44,7 +44,7 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           new_branch: ${{ steps.define_new_branch_name.outputs.new_branch_name }}
-          add: "#{ISSUE_NUM}/blog.md"
+          add: "${ISSUE_NUM}/blog.md"
 
       - name: Create PR
         run: |
