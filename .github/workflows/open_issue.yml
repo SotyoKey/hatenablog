@@ -47,7 +47,7 @@ jobs:
         id: post_new_entry
         run: |
           blog_file_path=$(echo | bin/blogsync post --draft --title=${ISSUE_TITLE} --custom-path=${ISSUE_TITLE} ${BLOG_DOMAIN} | tail -1 | awk '{ print $1 }')
-          echo ${blog_file_path}
+          echo $(blog_file_path)
           echo "::set-output name=blog_file_path::$blog_file_path"
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
