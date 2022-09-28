@@ -56,7 +56,7 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           add: "entry/*.md"
-          commit: --sioff
+          commit: --signoff
                   
       - name: Create PR
         run: |
