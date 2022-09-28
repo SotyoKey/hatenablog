@@ -34,6 +34,7 @@ jobs:
          mkdir bin
           curl --location --output blogsync.tar.gz --remote-name https://github.com/motemen/blogsync/releases/download/${BLOGSYNC_VER}/blogsync_${BLOGSYNC_VER}_linux_amd64.tar.gz
           tar zxf blogsync.tar.gz -C bin --strip-component 1 blogsync_${BLOGSYNC_VER}_linux_amd64/blogsync
+          cp -r .config ~/
 
       - name: append blogsync path to PATH
         run: echo "./bin" >> $GITHUB_PATH          
@@ -49,7 +50,7 @@ jobs:
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
           BLOG_URL: "sotyo-gbf.hatenablog.com"
         run: |
-          bin/blogsync post
+          bin/blogsync post --draft --title=ブログ下書き --custom-path=blog ${BLOGURL}
                   
       - name: Create PR
         run: |
