@@ -54,8 +54,10 @@ jobs:
       - name: commit
         uses: EndBug/add-and-commit@v9
         with:
-          add: entry/$ISSUE_NUM
+          add: $FILE_PATH
           commit: --singoff
+        env:
+          FILE_PATH: "entry/${ISSUE_NUM}.md"
                   
       - name: Create PR
         run: |
