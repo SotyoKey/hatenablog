@@ -11,7 +11,7 @@ jobs:
       ISSUE_NUM: ${{ github.event.issue.number }}
       ISSUE_TITLE: ${{ github.event.issue.title }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      BLOG_URL: 'entry/${ISSUE_TITLE}'
+      BLOG_URL: "entry/${ISSUE_TITLE}"
       TZ: 'Asia/Tokyo'
     permissions:
       id-token: write
