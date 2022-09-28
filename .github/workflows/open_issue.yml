@@ -26,13 +26,7 @@ jobs:
         run: |
           new_branch_name=$(echo "blog_${ISSUE_NUM}")
           echo "::set-output name=new_branch_name::$new_branch_name"
-          
-      - name: Define new blog file path
-        id: define_new_blog_file_path
-        run: |
-          blog_file_path=$(echo "entry/${ISSUE_TITLE}.md")
-          echo "::set-output name=blog_file_path::$blog_file_path"
-          
+                  
       - name: Create branch
         uses: EndBug/add-and-commit@v9
         with:
@@ -50,9 +44,10 @@ jobs:
         run: echo "./bin" >> $GITHUB_PATH          
                    
       - name: post new entry
+        id: post_new_entry
         run: |
-          bin/blogsync post --draft --title=tst --custom-path=${ISSUE_NUM} ${BLOG_DOMAIN}
-          echo "${BLOG_URL}.md"
+          blog_file_path=${echo | bin/blogsync post --draft --title=${ISSUE_TITLE} --custom-path=${ISSUE_TITLE} ${BLOG_DOMAIN} | tail -1 | awk '{ print $1 }')
+          echo "::set-output name=blog_file_path::$blog_file_path"
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
@@ -61,7 +56,7 @@ jobs:
       - name: commit
         uses: EndBug/add-and-commit@v9
         with:
-          add: ${{ steps.define_new_blog_file_path.outputs.blog_file_path }}
+          add: ${{ steps.post_new_entry.outputs.blog_file_path }}
           commit: --singoff
                   
       - name: Create PR
