@@ -11,7 +11,6 @@ jobs:
       ISSUE_NUM: ${{ github.event.issue.number }}
       ISSUE_TITLE: ${{ github.event.issue.title }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      CUSTOM_PATH: "entry/2022/07/#{ISSUE_TITLE}/"
       TZ: 'Asia/Tokyo'
     permissions:
       id-token: write
@@ -32,7 +31,7 @@ jobs:
         id: define_blog_custom_path
         run: |
           current_datetime_dir_path=$(date +'%Y/%m')
-          custom_path=$(echo "entry/$current_datetime_dir_path/${ISSUE_TITLE}/")
+          custom_path=$(echo "entry/$current_datetime_dir_path/${ISSUE_TITLE}")
           echo "::set-output name=custom_path::$custom_path"
 
       - name: Setup blogsync
@@ -49,9 +48,8 @@ jobs:
       - name: post new entry
         id: post_new_entry
         run: |
-          bin/blogsync post --draft --title="${ISSUE_TITLE}" --custom-path="${{ steps.define_blog_custom_path.outputs.custom_path }}" ${BLOG_DOMAIN}
-          dir_name=$(dirname "${{ steps.define_blog_custom_path.outputs.custom_path }}")
-          mkdir $dir_name
+          bin/blogsync post --draft --title="${ISSUE_TITLE}" --custom-path="${{ steps.define_blog_custom_path.outputs.custom_path }}/" ${BLOG_DOMAIN}
+          mkdir "${{ steps.define_blog_custom_path.outputs.custom_path }}/image"
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
