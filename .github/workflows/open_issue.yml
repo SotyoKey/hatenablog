@@ -31,7 +31,7 @@ jobs:
         id: define_blog_custom_path
         run: |
           current_datetime_dir_path=$(date +'%Y/%m')
-          custom_path=$(echo "entry/$current_datetime_dir_path/${ISSUE_TITLE}")
+          custom_path=$(echo "$current_datetime_dir_path/${ISSUE_TITLE}")
           echo "::set-output name=custom_path::$custom_path"
 
       - name: Setup blogsync
@@ -49,7 +49,7 @@ jobs:
         id: post_new_entry
         run: |
           bin/blogsync post --draft --title="${ISSUE_TITLE}" --custom-path="${{ steps.define_blog_custom_path.outputs.custom_path }}/" ${BLOG_DOMAIN}
-          mkdir "${{ steps.define_blog_custom_path.outputs.custom_path }}/image"
+          mkdir "entry/${{ steps.define_blog_custom_path.outputs.custom_path }}/image"
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
