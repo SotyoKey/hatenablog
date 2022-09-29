@@ -48,7 +48,7 @@ jobs:
       - name: post new entry
         id: post_new_entry
         run: |
-          bin/blogsync post --draft --title="${ISSUE_TITLE}" --custom-path="${{ steps.define_blog_custom_path.outputs.custom_path }}/" ${BLOG_DOMAIN}
+          bin/blogsync post --draft --title="${ISSUE_TITLE}" --custom-path="${{ steps.define_blog_custom_path.outputs.custom_path }}/" ${BLOG_DOMAIN} < new_entry.md
           mkdir "entry/${{ steps.define_blog_custom_path.outputs.custom_path }}/image"
           echo "" > "entry/${{ steps.define_blog_custom_path.outputs.custom_path }}/image/.gitkeep"
         env:
