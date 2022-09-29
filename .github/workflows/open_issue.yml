@@ -50,7 +50,8 @@ jobs:
         id: post_new_entry
         run: |
           bin/blogsync post --draft --title="${ISSUE_TITLE}" --custom-path="${{ steps.define_blog_custom_path.outputs.custom_path }}" ${BLOG_DOMAIN}
-          mkdir | dirname "${{ steps.define_blog_custom_path.outputs.custom_path }}"
+          dir_name=$(dirname "${{ steps.define_blog_custom_path.outputs.custom_path }}")
+          mkdir $dir_name
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
