@@ -1,1 +1,46 @@
+on:
+  pull_request:
+    branches-ignore:
+      - master
+    types: closed
 
+jobs:
+  push_entry:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    env:
+      REPO: ${{ github.repository }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TZ: 'Asia/Tokyo'
+    permissions:
+      id-token: write
+      issues: write
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+              
+      - name: Setup blogsync
+        env:
+          BLOGSYNC_VER: v0.12.1
+        run: |
+         mkdir bin
+          curl --location --output blogsync.tar.gz --remote-name https://github.com/motemen/blogsync/releases/download/${BLOGSYNC_VER}/blogsync_${BLOGSYNC_VER}_linux_amd64.tar.gz
+          tar zxf blogsync.tar.gz -C bin --strip-component 1 blogsync_${BLOGSYNC_VER}_linux_amd64/blogsync
+
+      - name: append blogsync path to PATH
+        run: echo "./bin" >> $GITHUB_PATH
+        
+      - name: Get changed files
+        id: changed_files
+        uses: tj-actions/changed-files@v31
+                   
+      - name: push entry
+        run: |
+          bash scripts/post_blog.sh ${{ steps.changed_files.outputs.all_changed_files }}
+        env:
+          BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
+          BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
+          
+          
