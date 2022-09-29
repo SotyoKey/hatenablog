@@ -59,7 +59,7 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           new_branch: ${{ steps.define_new_branch_name.outputs.new_branch_name }}
-          add:  ${{ steps.define_blog_custom_path.outputs.custom_path }}
+          add:  "entry/${{ steps.define_blog_custom_path.outputs.custom_path }}/*"
                   
       - name: Create PR
         run: |
