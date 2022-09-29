@@ -30,8 +30,8 @@ jobs:
                    
       - name: push entry
         run: |
-          git diff origin/master --name-only \
-          | xargs -t n1 blogsync push
+          git diff origin/master \
+          | xargs -t -n1 blogsync push
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
