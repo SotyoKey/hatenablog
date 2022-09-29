@@ -1,36 +1,37 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  push
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  push_entry:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    env:
+      REPO: ${{ github.repository }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TZ: 'Asia/Tokyo'
+    permissions:
+      id-token: write
+      issues: write
+      contents: write
+      pull-requests: write
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Checkout
+        uses: actions/checkout@v3
+              
+      - name: Setup blogsync
+        env:
+          BLOGSYNC_VER: v0.12.1
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+         mkdir bin
+          curl --location --output blogsync.tar.gz --remote-name https://github.com/motemen/blogsync/releases/download/${BLOGSYNC_VER}/blogsync_${BLOGSYNC_VER}_linux_amd64.tar.gz
+          tar zxf blogsync.tar.gz -C bin --strip-component 1 blogsync_${BLOGSYNC_VER}_linux_amd64/blogsync
+
+      - name: append blogsync path to PATH
+        run: echo "./bin" >> $GITHUB_PATH          
+                   
+      - name: push entry
+        run: |
+          git diff origin/master --name-only \
+          | xargs -t n1 blogsync push
+        env:
+          BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
+          BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
