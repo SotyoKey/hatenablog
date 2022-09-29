@@ -27,8 +27,8 @@ jobs:
         run: |
           new_branch_name=$(echo "blog_${ISSUE_NUM}")
           echo "::set-output name=new_branch_name::$new_branch_name"
-
-    　- name: Define blog custom path
+                    
+      - name: Define blog custom path
         id: define_blog_custom_path
         run: |
           current_datetime_dir_path=$(date +'%Y/%m')
@@ -60,7 +60,7 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           new_branch: ${{ steps.define_new_branch_name.outputs.new_branch_name }}
-          add: "entry/"
+          add:  ${{ steps.define_blog_custom_path.outputs.custom_path }}
                   
       - name: Create PR
         run: |
