@@ -35,7 +35,7 @@ jobs:
                    
       - name: push entry
         run: |
-          ${{ github.workspaace }}/scripts/post_blog.sh ${{ steps.changed_files.outputs.all_changed_files }}
+          scripts/post_blog.sh ${{ steps.changed_files.outputs.all_changed_files }}
           echo ${{ steps.changed_files.outputs.all_changed_files }}
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
