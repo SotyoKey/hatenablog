@@ -35,8 +35,8 @@ jobs:
                    
       - name: push entry
         run: |
-          draft_file=$(sed -e "s/\(entry\/*\/.*\.md\)/\1/g" ${{ steps.changed_files.outputs.all_changed_files }})
-          image_file=$(sed -e "s/\(entry\/*\/image\/.*\)/\1/g" ${{ steps.changed_files.outputs.all_changed_files }})
+          draft_file=$(sed -e "s/\(entry\/*\/.*\.md\)/\1/g" "${{ steps.changed_files.outputs.all_changed_files }}")
+          image_file=$(sed -e "s/\(entry\/*\/image\/.*\)/\1/g" "${{ steps.changed_files.outputs.all_changed_files }}")
           echo $draft_file
           bash scripts/post_blog.sh ${{ steps.changed_files.outputs.all_changed_files }}
         env:
