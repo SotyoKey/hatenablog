@@ -11,6 +11,7 @@ jobs:
       ISSUE_NUM: ${{ github.event.issue.number }}
       ISSUE_TITLE: ${{ github.event.issue.title }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      CUSTOM_PATH: "entry/2022/07/#{ISSUE_TITLE}/"
       TZ: 'Asia/Tokyo'
     permissions:
       id-token: write
@@ -26,7 +27,14 @@ jobs:
         run: |
           new_branch_name=$(echo "blog_${ISSUE_NUM}")
           echo "::set-output name=new_branch_name::$new_branch_name"
-            
+
+    　- name: Define blog custom path
+        id: define_blog_custom_path
+        run: |
+          current_datetime_dir_path=$(date +'%Y/%m')
+          custom_path=$(echo "entry/$current_datetime_dir_path/${ISSUE_TITLE}/")
+          echo "::set-output name=custom_path::$custom_path"
+
       - name: Setup blogsync
         env:
           BLOGSYNC_VER: v0.12.1
@@ -42,6 +50,7 @@ jobs:
         id: post_new_entry
         run: |
           bin/blogsync post --draft --title="${ISSUE_TITLE}" --custom-path="${ISSUE_TITLE}/" ${BLOG_DOMAIN}
+          mkdir | dirname 
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
@@ -51,7 +60,7 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           new_branch: ${{ steps.define_new_branch_name.outputs.new_branch_name }}
-          add: "entry/*.md"
+          add: "entry/"
                   
       - name: Create PR
         run: |
