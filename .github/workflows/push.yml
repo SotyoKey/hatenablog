@@ -1,5 +1,6 @@
 on:
-  push
+  pull_request:
+    types: synchronize
 
 jobs:
   push_entry:
@@ -26,12 +27,16 @@ jobs:
           tar zxf blogsync.tar.gz -C bin --strip-component 1 blogsync_${BLOGSYNC_VER}_linux_amd64/blogsync
 
       - name: append blogsync path to PATH
-        run: echo "./bin" >> $GITHUB_PATH          
+        run: echo "./bin" >> $GITHUB_PATH
+        
+      - name: Get changed files
+        id: changed_files
+        uses: tj-actions/changed-files@v31
                    
       - name: push entry
         run: |
-          git diff origin/master \
-          | xargs -t -n1 blogsync push
+          blogsync push ${{ steps.changed_files.outputs.all_changed_files }}
+          echo ${{ steps.changed_files.outputs.all_changed_files }}
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
