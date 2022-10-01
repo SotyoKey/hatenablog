@@ -35,8 +35,7 @@ jobs:
                    
       - name: push entry
         run: |
-          test=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+\.md")
-          echo $test
+          echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+/image/\S+\.[a-zA-z]+"
           draft_file=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+\.md")
           image_files=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+/image/\S+\.[a-zA-z]+")
           echo $draft_file
