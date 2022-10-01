@@ -36,9 +36,12 @@ jobs:
         id: changed_files
         uses: tj-actions/changed-files@v31
                    
-      - name: push entry
+      - name: post blog
         run: |
-          bash scripts/post_blog.sh ${{ steps.changed_files.outputs.all_changed_files }}
+          draft_file=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+\.md" | cat)
+          image_files=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+/image/\S+\.[a-zA-z]+" | cat)
+          sed -i "/^Draft: .*$/d" $draft_file
+          bin/blogsync push $draft_file
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
