@@ -37,9 +37,7 @@ jobs:
         run: |
           draft_file=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+\.md" | cat)
           image_files=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+/image/\S+\.[a-zA-z]+" | cat)
-          echo $draft_file
-          echo $image_files
-          bash scripts/post_blog.sh ${{ steps.changed_files.outputs.all_changed_files }}
+          bin/blogsync push $draft_file
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
