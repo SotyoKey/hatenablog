@@ -42,11 +42,13 @@ jobs:
         uses: tj-actions/changed-files@v31
                    
       - name: push entry
+        id: push_entry
         run: |
           draft_file=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+\.md" | cat)
-          image_file_path=$(dirname $draft_file)
-          ruby scripts/post_image.rb --imagedir "$image_file_path" --filename $draft_file
+          blog_path=$(dirname $draft_file)
+          ruby scripts/post_image.rb --imagedir "$blog_path" --filename $draft_file
           bin/blogsync push $draft_file
+          echo "::set-output name=blog_path::$blog_path"
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
@@ -58,5 +60,5 @@ jobs:
       - name: image json push
         uses: EndBug/add-and-commit@v9
         with:
-          add:  "entry/${{ steps.define_blog_custom_path.outputs.custom_path }}/image.json"
+          add:  "entry/${{ steps.push_entry.outputs.blog_path }}/image.json"
           message: "[skip actions]"
