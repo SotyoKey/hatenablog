@@ -42,7 +42,7 @@ jobs:
         run: |
           draft_file=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+\.md" | cat)
           image_file_path=$(dirname $draft_file)
-          ruby post_image --image_dir image_file_path --filename $draft_file
+          ruby scripts/post_image.rb --image_dir image_file_path --filename $draft_file
           bin/blogsync push $draft_file
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
