@@ -20,6 +20,8 @@ require 'active_support/core_ext/hash'
 require 'xmlsimple'
 require 'base64'
 require 'mime/types'
+require 'optparse'
+require 'cgi'
 
 class Executor
   attr_reader :header, :hatena, :args, :json, :photolife
