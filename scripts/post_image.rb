@@ -59,8 +59,10 @@ class Executor
   def post_image(image_filename, filename, image_dir)
     return image_filename unless image_filename.match('http').nil?
 
-    dir = filename.split('/')[1]
-    image_path = "image_dir/#{image_filename}"
+    image_path = "#{image_dir}/#{image_filename}"
+    
+    puts json
+    puts image_filename
 
     if (json.dig(image_filename).nil?)
       xml = upload_image(@photolife, image_path)
