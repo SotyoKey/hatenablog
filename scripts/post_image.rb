@@ -26,7 +26,7 @@ require 'cgi'
 class Executor
   attr_reader :header, :hatena, :args, :json, :photolife
 
-  DATA_FILE = 'draft.json'
+  DATA_FILE = 'image.json'
 
   class << self
     def get_token(site)
@@ -51,7 +51,7 @@ class Executor
       'Accept' => 'application/xml',
       'Content-Type' => 'application/xml'
     }
-    json_file = args[:imagedir] + DATA_FILE
+    json_file = args[:imagedir] + "/" + DATA_FILE
     @photolife = Executor.get_token('http://f.hatena.ne.jp')
     @json = JSON.parse(File.read(json_file)).map(&:symbolize_keys!)
   end
