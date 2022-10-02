@@ -89,10 +89,7 @@ class Executor
   end
 
   def execute
-    entry_json = json.find { |e| e[:filename] == args[:filename ] }
-    entry_index = json.find_index { |e| e[:filename] == args[:filename] }
-
-    generated_body = generate_body(args[:filename], args[:image_dir])
+    generated_body = generate_body(args[:filename], args[:imagedir])
 
     File.write(DATA_FILE, JSON.pretty_generate(json, indent: "   ", space_before: ' '))
   end
