@@ -47,6 +47,10 @@ jobs:
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
+          HATENABLOG_CONSUMER_KEY: ${{ secrets.HATENABLOG_CONSUMER_KEY }}
+          HATENABLOG_CONSUMER_SECRET: ${{ secrets.HATENABLOG_CONSUMER_SECRET }}
+          HATENABLOG_ACCESS_TOKEN: ${{ secrets.HATENABLOG_ACCESS_TOKEN }}
+          HATENABLOG_ACCESS_TOKEN_SECRET: ${{ secrets.HATENABLOG_ACCESS_TOKEN_SECRET }}
           
           
           
