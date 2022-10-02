@@ -115,7 +115,7 @@ ENTRY
   end
 end
 
-args = ARGV.getopts('image_dir:', 'filename:').symbolize_keys
+args = ARGV.getopts('imagedir:', 'filename:').symbolize_keys
 
 executor = Executor.new(args)
 executor.execute
