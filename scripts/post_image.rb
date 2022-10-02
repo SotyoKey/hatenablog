@@ -24,7 +24,7 @@ require 'optparse'
 require 'cgi'
 
 class Executor
-  attr_reader :header, :hatena, :args, :json, :photolife
+  attr_reader :header, :hatena, :args, :json, :photolife, :json_file
 
   DATA_FILE = 'image.json'
 
