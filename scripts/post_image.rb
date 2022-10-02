@@ -35,7 +35,7 @@ class Executor
       consumer = OAuth::Consumer.new(
         ENV['HATENABLOG_CONSUMER_KEY'],
         ENV['HATENABLOG_CONSUMER_SECRET'],
-        site: site,
+        site: "sotyo-gbf.hatenablog.com",
         timeout: 300
       )
 
