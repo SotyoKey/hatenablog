@@ -60,5 +60,5 @@ jobs:
       - name: image json push
         uses: EndBug/add-and-commit@v9
         with:
-          add:  "entry/${{ steps.push_entry.outputs.blog_path }}/image.json"
+          add:  "${{ steps.push_entry.outputs.blog_path }}/image.json"
           message: "[skip actions]"
