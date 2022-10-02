@@ -33,7 +33,7 @@ class Executor
       consumer = OAuth::Consumer.new(
         ENV['HATENABLOG_CONSUMER_KEY'],
         ENV['HATENABLOG_CONSUMER_SECRET'],
-        site: "sotyo-gbf.hatenablog.com",
+        site: 'http://f.hatena.ne.jp',
         timeout: 300
       )
 
@@ -52,7 +52,7 @@ class Executor
       'Content-Type' => 'application/xml'
     }
     json_file = args[:imagedir] + "/" + DATA_FILE
-    @photolife = Executor.get_token('http://f.hatena.ne.jp')
+    @photolife = Executor.get_token
     @json = JSON.parse(File.read(json_file))
   end
 
