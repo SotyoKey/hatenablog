@@ -10,18 +10,13 @@
 # ruby hatenablog.rb --filename docs/hoge/fuga.md --draft --user hoge --site hoge-fuga.hatenablog.com
 #
 # 下記ファイル構成を前提としている
-# markdown: docs/${category}/${name}.md
-# image: docs/${category}/${imagename}
+# markdown: entry/${issune#num}/draft.md
+# image: entry/${issune#num}/image/xxx.jpg
 
-require 'awesome_print'
 require 'oauth'
-require 'optparse'
 require 'json'
-require 'uri'
-require 'oga'
 require 'active_support/core_ext/hash'
 require 'xmlsimple'
-require 'cgi'
 require 'base64'
 require 'mime/types'
 
