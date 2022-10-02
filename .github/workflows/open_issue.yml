@@ -53,6 +53,7 @@ jobs:
           sed -i "/^Date: .*$/d"  "entry/${{ steps.define_blog_custom_path.outputs.custom_path }}/draft.md"
           mkdir "entry/${{ steps.define_blog_custom_path.outputs.custom_path }}/image"
           echo "" > "entry/${{ steps.define_blog_custom_path.outputs.custom_path }}/image/.gitkeep"
+          cp image.json "entry/${{ steps.define_blog_custom_path.outputs.custom_path }}"
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
           BLOGSYNC_PASSWORD: ${{ secrets.PASSWORD }}
