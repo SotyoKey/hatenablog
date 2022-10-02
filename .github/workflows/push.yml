@@ -58,7 +58,7 @@ jobs:
           HATENABLOG_ACCESS_TOKEN_SECRET: ${{ secrets.HATENABLOG_ACCESS_TOKEN_SECRET }}
 
       - name: image json push
-        uses: EndBug/add-and-commit@v9
-        with:
-          add:  "${{ steps.push_entry.outputs.blog_path }}/image.json"
-          message: "[skip actions]"
+        run: |
+          git add "${{ steps.push_entry.outputs.blog_path }}/image.json"
+          git commit -m "[skip actions] image.jsonを更新"
+          git push origin HEAD:${GITHUB_REF}
