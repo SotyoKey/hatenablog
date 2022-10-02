@@ -93,7 +93,7 @@ class Executor
   def execute
     generated_body = generate_body(args[:filename], args[:imagedir])
 
-    File.write(DATA_FILE, JSON.pretty_generate(json, indent: "   ", space_before: ' '))
+    File.write(json_file, JSON.pretty_generate(json, indent: "   ", space_before: ' '))
   end
 
   def upload_image(client, filename, dirname = 'Hatena Blog')
