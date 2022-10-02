@@ -61,8 +61,8 @@ class Executor
 
     image_path = "#{image_dir}/#{image_filename}"
     
-    puts json
-    puts image_filename
+    puts "#{json.class}"
+    puts "#{image_filename}"
 
     if (json.dig(image_filename).nil?)
       xml = upload_image(@photolife, image_path)
