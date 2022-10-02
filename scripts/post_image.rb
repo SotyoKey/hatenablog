@@ -29,7 +29,7 @@ class Executor
   DATA_FILE = 'image.json'
 
   class << self
-    def get_token(site)
+    def get_token
       consumer = OAuth::Consumer.new(
         ENV['HATENABLOG_CONSUMER_KEY'],
         ENV['HATENABLOG_CONSUMER_SECRET'],
