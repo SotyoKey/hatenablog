@@ -54,6 +54,9 @@ jobs:
           HATENABLOG_CONSUMER_SECRET: ${{ secrets.HATENABLOG_CONSUMER_SECRET }}
           HATENABLOG_ACCESS_TOKEN: ${{ secrets.HATENABLOG_ACCESS_TOKEN }}
           HATENABLOG_ACCESS_TOKEN_SECRET: ${{ secrets.HATENABLOG_ACCESS_TOKEN_SECRET }}
-          
-          
-          
+
+      - name: image json push
+        uses: EndBug/add-and-commit@v9
+        with:
+          add:  "entry/${{ steps.define_blog_custom_path.outputs.custom_path }}/image.json"
+          message: "[skip actions]"
