@@ -51,7 +51,7 @@ class Executor
       'Accept' => 'application/xml',
       'Content-Type' => 'application/xml'
     }
-    json_file = args[:image_dir] + DATA_FILE
+    json_file = args[:imagedir] + DATA_FILE
     @photolife = Executor.get_token('http://f.hatena.ne.jp')
     @json = JSON.parse(File.read(json_file)).map(&:symbolize_keys!)
   end
