@@ -60,13 +60,12 @@ class Executor
     return image_filename unless image_filename.match('http').nil?
 
     image_path = "#{image_dir}/#{image_filename}"
-    
-    puts "#{json.class}"
-    puts "#{image_filename}"
 
     if (json.dig(image_filename).nil?)
       xml = upload_image(@photolife, image_path)
+      puts "#{xml}
       hash = XmlSimple.xml_in(xml)
+      puts "#{hash}"
       syntax = "[#{hash['syntax'].first}]"
 
       json[image_filename] = {
