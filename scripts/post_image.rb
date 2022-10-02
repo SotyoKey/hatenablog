@@ -55,7 +55,7 @@ class Executor
     }
     json_file = args[:image_dir] + DATA_FILE
     @photolife = Executor.get_token('http://f.hatena.ne.jp')
-    @json = JSON.parse(File.read(json_file).map(&:symbolize_keys!)
+    @json = JSON.parse(File.read(json_file)).map(&:symbolize_keys!)
   end
 
   def post_image(image_filename, filename, image_dir)
