@@ -14,6 +14,7 @@
 # image: entry/${issune#num}/image/xxx.jpg
 
 require 'oauth'
+require 'oga'
 require 'json'
 require 'active_support/core_ext/hash'
 require 'xmlsimple'
