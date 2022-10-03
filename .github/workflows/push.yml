@@ -73,6 +73,6 @@ jobs:
           echo $change_image_json
           if [ -n "$change_image_json" ] ; then
             echo "commit"
-            git commit -m "[skip actions] image.jsonを更新"
+            git commit -m "image.jsonを更新"
             git push origin HEAD:${{ github.head_ref }}
           fi
