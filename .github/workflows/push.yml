@@ -71,7 +71,7 @@ jobs:
           git add "${{ steps.push_entry.outputs.blog_path }}/image.json"
           change_image_json=$(git status -s | grep -Eo "M\s\s.+/image\.json" | cat)
           echo $change_image_json
-          if [ -z $change_image_json ] ; then
+          if [ -z "$change_image_json" ] ; then
             echo "commit"
             git commit -m "[skip actions] image.jsonを更新"
             git push origin HEAD:${{ github.head_ref }}
