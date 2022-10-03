@@ -59,7 +59,7 @@ class Executor
   def post_image(image_filename, filename, blog_dir)
     return image_filename unless image_filename.match('http').nil?
 
-    image_path = "#{image_dir}/image/#{image_filename}"
+    image_path = "#{blog_dir}/image/#{image_filename}"
     puts "image_path: #{image_path}"
 
     if (json.dig(image_filename).nil?)
