@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
       
       - name: Set up Ruby 2.7
         uses: ruby/setup-ruby@v1
@@ -64,8 +64,6 @@ jobs:
           git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          if (git diff --shortstat "${{ steps.push_entry.outputs.blog_path }}/image.json" | grep '[0-9]'); then \
-            git add "${{ steps.push_entry.outputs.blog_path }}/image.json"
-            git commit -m "[skip actions] image.jsonを更新"
-            git push origin HEAD:${GITHUB_REF}
-          fi
+          git add "${{ steps.push_entry.outputs.blog_path }}/image.json"
+          git commit -m "[skip actions] image.jsonを更新"
+          git push
