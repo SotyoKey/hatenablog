@@ -70,7 +70,7 @@ jobs:
           git fetch
           git add "${{ steps.push_entry.outputs.blog_path }}/image.json"
           git status -s
-          if [ $(git status -s) =~ ^M\s.+ ] ; then
+          if [ $(git status -s) =~ M\s\s.+ ] ; then
             echo "commit"
             git commit -m "[skip actions] image.jsonを更新"
             git push origin HEAD:${{ github.head_ref }}
