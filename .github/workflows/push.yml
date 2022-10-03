@@ -49,6 +49,7 @@ jobs:
           draft_file=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+\.md" | cat)
           blog_path=$(dirname $draft_file)
           if [ -n "$draft_file" ] ; then
+            echo "push entry"
             ruby scripts/post_image.rb --imagedir "$blog_path" --filename $draft_file
             bin/blogsync push $draft_file
           fi
@@ -65,6 +66,7 @@ jobs:
         run: |
           cat "${{ steps.push_entry.outputs.blog_path }}/image.json"
           if [ -n $(git diff "${{ steps.push_entry.outputs.blog_path }}/image.json") ] ; then
+            echo "push json"
             git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
             git config --global user.name "${GITHUB_ACTOR}"
             git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
