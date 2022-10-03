@@ -71,4 +71,4 @@ jobs:
           git fetch
           git add "${{ steps.push_entry.outputs.blog_path }}/image.json"
           git commit -m "[skip actions] image.jsonを更新"
-          git push origin ${{ github.head_ref }}
+          git push origin HEAD:${{ github.head_ref }}
