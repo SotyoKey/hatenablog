@@ -85,7 +85,7 @@ class Executor
     markdown = File.read(filename)
 
     # はてフォトライフの画像へ差し替え
-    markdown.gsub!(/!\[.*\]\(.*/(.*)\)/) { post_image($1, filename, blog_dir) }
+    markdown.gsub!(/!\[.*\]\(.*\/(.*)\)/) { post_image($1, filename, blog_dir) }
 
     markdown
   end
