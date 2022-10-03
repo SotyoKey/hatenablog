@@ -1,6 +1,8 @@
 on:
   pull_request:
-    types: synchronize
+    branches:
+      - master
+    types: closed
 
 jobs:
   push_entry:
