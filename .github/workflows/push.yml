@@ -65,7 +65,7 @@ jobs:
           git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git fetch
+          git fetch origin origin/${{ github.head_ref }}
           git add "${{ steps.push_entry.outputs.blog_path }}/image.json"
           git commit -m "[skip actions] image.jsonを更新"
           git push origin origin/${{ github.head_ref }}
