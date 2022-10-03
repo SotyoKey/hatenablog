@@ -1,11 +1,11 @@
 on:
   pull_request:
     branches:
-      - master
+      - "blog_*"
     types: closed
 
 jobs:
-  push_entry:
+  merge_entry:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     env:
