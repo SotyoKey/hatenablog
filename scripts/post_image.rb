@@ -51,7 +51,7 @@ class Executor
       'Accept' => 'application/xml',
       'Content-Type' => 'application/xml'
     }
-    @json_file = args[:imagedir] + "/" + DATA_FILE
+    @json_file = args[:blogdir] + "/" + DATA_FILE
     @photolife = Executor.get_token
     @json = JSON.parse(File.read(json_file))
   end
