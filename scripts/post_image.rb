@@ -56,10 +56,10 @@ class Executor
     @json = JSON.parse(File.read(json_file))
   end
 
-  def post_image(image_filename, filename, image_dir)
+  def post_image(image_filename, filename, blog_dir)
     return image_filename unless image_filename.match('http').nil?
 
-    image_path = "#{image_dir}/#{image_filename}"
+    image_path = "#{image_dir}/image/#{image_filename}"
     puts "image_path: #{image_path}"
 
     if (json.dig(image_filename).nil?)
@@ -81,17 +81,17 @@ class Executor
     end
   end
 
-  def generate_body(filename, image_dir)
+  def generate_body(filename, blog_dir)
     markdown = File.read(filename)
 
     # はてフォトライフの画像へ差し替え
-    markdown.gsub!(/!\[.*\]\((.*)\)/) { post_image($1, filename, image_dir) }
+    markdown.gsub!(/!\[.*\]\(.*/(.*)\)/) { post_image($1, filename, blog_dir) }
 
     markdown
   end
 
   def execute
-    generated_body = generate_body(args[:filename], args[:imagedir])
+    generated_body = generate_body(args[:filename], args[:blogdir])
 
     puts "json: #{json_file}"
     File.write(json_file, JSON.pretty_generate(json, indent: "   ", space_before: ' '))
@@ -118,7 +118,7 @@ ENTRY
   end
 end
 
-args = ARGV.getopts('f:i','filename:', 'imagedir:').symbolize_keys
+args = ARGV.getopts('f:b','filename:', 'blogdir:').symbolize_keys
 
 executor = Executor.new(args)
 executor.execute
