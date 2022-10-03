@@ -69,8 +69,9 @@ jobs:
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git fetch
           git add "${{ steps.push_entry.outputs.blog_path }}/image.json"
-          git_status_files=$(git status -s)
-          if [ $git_status_files =~ M\s\s.+ ] ; then
+          change_image_json=$(git status -s | grep -Eo "M\s\s.+/image\.json" | cat)
+          echo $change_image_json
+          if [ $change_image_json ] ; then
             echo "commit"
             git commit -m "[skip actions] image.jsonを更新"
             git push origin HEAD:${{ github.head_ref }}
