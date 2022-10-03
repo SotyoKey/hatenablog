@@ -12,14 +12,27 @@ jobs:
       REPO: ${{ github.repository }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       TZ: 'Asia/Tokyo'
+    permissions:
+      id-token: write
+      issues: write
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth : 0
+          fetch-depth: 0
       - run: |
           git checkout ${{ github.head_ref }}
-              
+      
+      - name: Set up Ruby 2.7
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+          
+      - name: Install dependencies
+        run: bundle install
+      
       - name: Setup blogsync
         env:
           BLOGSYNC_VER: v0.12.1
@@ -34,7 +47,7 @@ jobs:
       - name: Get changed files
         id: changed_files
         uses: tj-actions/changed-files@v31
-                        
+                   
       - name: push entry
         id: push_entry
         run: |
@@ -52,4 +65,5 @@ jobs:
           HATENABLOG_CONSUMER_SECRET: ${{ secrets.HATENABLOG_CONSUMER_SECRET }}
           HATENABLOG_ACCESS_TOKEN: ${{ secrets.HATENABLOG_ACCESS_TOKEN }}
           HATENABLOG_ACCESS_TOKEN_SECRET: ${{ secrets.HATENABLOG_ACCESS_TOKEN_SECRET }}
+
           
