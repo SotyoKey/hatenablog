@@ -8,6 +8,6 @@ CustomPath: 2022/10/issue_309/draft
 ---
 
 本文
+ですよ
 
-![画像](image/unnamed.png)
-test
+開業したよ
