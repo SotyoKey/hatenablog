@@ -93,7 +93,7 @@ class Executor
   def execute
     generated_body = generate_body(args[:filename], args[:blogdir])
 
-    puts "json: #{json_file}"
+    File.write(args[:filename], generated_body)
     File.write(json_file, JSON.pretty_generate(json, indent: "   ", space_before: ' '))
   end
 
