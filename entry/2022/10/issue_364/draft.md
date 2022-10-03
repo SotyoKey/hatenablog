@@ -8,3 +8,6 @@ CustomPath: 2022/10/issue_364/draft
 ---
 
 本文
+![画像](image/unnamed.png)
+
+![画像](image/100064209_p0.png)
