@@ -48,11 +48,8 @@ jobs:
         run: |
           draft_file=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+\.md" | cat)
           blog_path=$(dirname $draft_file)
-          if [ -n $(git diff "$draft_file") ] ; then
-            echo "push entry"
-            ruby scripts/post_image.rb --imagedir "$blog_path" --filename $draft_file
-            bin/blogsync push $draft_file
-          fi
+          ruby scripts/post_image.rb --imagedir "$blog_path" --filename $draft_file
+          bin/blogsync push $draft_file
           echo "::set-output name=blog_path::$blog_path"
         env:
           BLOGSYNC_USERNAME: ${{ secrets.USERNAME }}
@@ -65,12 +62,9 @@ jobs:
       - name: image json push
         run: |
           cat "${{ steps.push_entry.outputs.blog_path }}/image.json"
-          if [ -n $(git diff "${{ steps.push_entry.outputs.blog_path }}/image.json") ] ; then
-            echo "push json"
-            git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
-            git config --global user.name "${GITHUB_ACTOR}"
-            git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-            git add "${{ steps.push_entry.outputs.blog_path }}/image.json"
-            git commit -m "[skip actions] image.jsonを更新"
-            git push origin HEAD:${GITHUB_REF#refs/heads/}
-          fi
+          git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git add "${{ steps.push_entry.outputs.blog_path }}/image.json"
+          git commit -m "[skip actions] image.jsonを更新"
+          git push origin HEAD:${GITHUB_REF#refs/heads/}
