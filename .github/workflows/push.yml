@@ -50,7 +50,7 @@ jobs:
         run: |
           draft_file=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+\.md" | cat)
           blog_path=$(dirname $draft_file)
-          ruby scripts/post_image.rb --imagedir "$blog_path" --filename $draft_file
+          ruby scripts/post_image.rb --dir "$blog_path" --filename $draft_file
           bin/blogsync push $draft_file
           cat $draft_file
           echo "::set-output name=blog_path::$blog_path"
