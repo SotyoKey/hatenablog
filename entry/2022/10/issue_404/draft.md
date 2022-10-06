@@ -8,3 +8,5 @@ CustomPath: 2022/10/issue_404/draft
 ---
 
 本文
+投稿取り消し！
+push
