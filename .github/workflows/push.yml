@@ -29,14 +29,7 @@ jobs:
           
       - name: Install dependencies
         run: bundle install
-        
-      - name: git rebase
-        run: |
-          git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
-          git config --global user.name "${GITHUB_ACTOR}"
-          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git pull --rebase origin master
-      
+            
       - name: Setup blogsync
         env:
           BLOGSYNC_VER: v0.12.1
@@ -55,7 +48,7 @@ jobs:
       - name: push entry
         id: push_entry
         run: |
-          draft_file=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+\.md" | cat)
+          draft_file=$(echo "${{ steps.changed_files.outputs.added_files }}" | grep -Eo "\S+\.md" | cat)
           blog_path=$(dirname $draft_file)
           ruby scripts/post_image.rb --blogdir "$blog_path" --filename $draft_file
           bin/blogsync push $draft_file
@@ -71,6 +64,10 @@ jobs:
 
       - name: image json push
         run: |
+          git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git pull
           git add "${{ steps.push_entry.outputs.blog_path }}/image.json"
           change_image_json=$(git status -s | grep -Eo "M\s\s.+/image\.json" | cat)
           echo $change_image_json
