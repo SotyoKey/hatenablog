@@ -46,3 +46,6 @@ CustomPath: open-tech-blog-vol1
 draft.md内の"Draft: true"の記述を消さないこと
 push時に記事が公開されてしまいます。
 
+
+
+test
