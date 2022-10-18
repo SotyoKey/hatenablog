@@ -31,7 +31,11 @@ jobs:
         run: bundle install
         
       - name: git rebase
-        run: git pull --rebase origin master
+        run: |
+          git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git pull --rebase origin master
       
       - name: Setup blogsync
         env:
@@ -67,10 +71,6 @@ jobs:
 
       - name: image json push
         run: |
-          git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
-          git config --global user.name "${GITHUB_ACTOR}"
-          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git pull
           git add "${{ steps.push_entry.outputs.blog_path }}/image.json"
           change_image_json=$(git status -s | grep -Eo "M\s\s.+/image\.json" | cat)
           echo $change_image_json
