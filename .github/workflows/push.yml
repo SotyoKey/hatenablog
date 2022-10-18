@@ -31,7 +31,7 @@ jobs:
         run: bundle install
         
       - name: git rebase
-        run: git pull --rebase
+        run: git merge master
       
       - name: Setup blogsync
         env:
