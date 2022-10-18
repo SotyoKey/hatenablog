@@ -25,9 +25,8 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git checkout ${{ github.head_ref }}
-          git pull --rebase origin master
+          git pull --rebase origin origin/master
           git push -f origin HEAD:${{ github.head_ref }}
-          
       
       - name: Set up Ruby 2.7
         uses: ruby/setup-ruby@v1
