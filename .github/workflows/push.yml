@@ -14,13 +14,20 @@ jobs:
       issues: write
       contents: write
       pull-requests: write
-    steps:
+    steps:         
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - run: |
-          git checkout ${{ github.head_ref }}
+          ref: "${{ github.event.workflow_run.head_sha }}"
+          
+      - name: merge master
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git fetch
+          git pull origin master
+          git push origin HEAD:${{ github.head_ref }}
       
       - name: Set up Ruby 2.7
         uses: ruby/setup-ruby@v1
@@ -29,7 +36,7 @@ jobs:
           
       - name: Install dependencies
         run: bundle install
-      
+                      
       - name: Setup blogsync
         env:
           BLOGSYNC_VER: v0.12.1
