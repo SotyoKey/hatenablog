@@ -15,6 +15,14 @@ jobs:
       contents: write
       pull-requests: write
     steps:
+      - name: merge master
+        run: |
+          git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git pull --rebase origin master
+          git push -f origin HEAD:${{ github.head_ref }}
+          
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -29,15 +37,7 @@ jobs:
           
       - name: Install dependencies
         run: bundle install
-            
-      - name: merge master
-        run: |
-          git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
-          git config --global user.name "${GITHUB_ACTOR}"
-          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git pull --rebase origin master
-          git push -f origin HEAD:${{ github.head_ref }}
-          
+                      
       - name: Setup blogsync
         env:
           BLOGSYNC_VER: v0.12.1
