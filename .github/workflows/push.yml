@@ -28,11 +28,6 @@ jobs:
           git checkout ${{ github.head_ref }}
           git pull --rebase origin master
           git push -f origin HEAD:${{ github.head_ref }}
-          
-      - name: ReCheckout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0         
       
       - name: Set up Ruby 2.7
         uses: ruby/setup-ruby@v1
