@@ -48,7 +48,7 @@ jobs:
       - name: push entry
         id: push_entry
         run: |
-          draft_file=$(echo "${{ env.GIT_DIFF }}" | grep -Eo "\S+\.md" | cat)
+          draft_file=$(echo "${{ env.GIT_DIFF }}" | grep -Eo "\'(\S+\.md)\'" | cat)
           blog_path=$(dirname $draft_file)
           ruby scripts/post_image.rb --blogdir "$blog_path" --filename $draft_file
           bin/blogsync push $draft_file
