@@ -43,12 +43,12 @@ jobs:
         
       - name: Get changed files
         id: changed_files
-        uses: tj-actions/changed-files@v31
+        uses: technote-space/get-diff-action@v6
                    
       - name: push entry
         id: push_entry
         run: |
-          draft_file=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | grep -Eo "\S+\.md" | cat)
+          draft_file=$(echo "${{ env.GIT_DIFF }}" | grep -Eo "\S+\.md" | cat)
           blog_path=$(dirname $draft_file)
           ruby scripts/post_image.rb --blogdir "$blog_path" --filename $draft_file
           bin/blogsync push $draft_file
