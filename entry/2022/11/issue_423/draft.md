@@ -8,3 +8,4 @@ CustomPath: 2022/11/issue_423/draft
 ---
 
 本文
+![](./test.jpg)
