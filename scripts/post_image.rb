@@ -68,6 +68,7 @@ class Executor
       hash = XmlSimple.xml_in(xml)
       puts "xmlhash: #{hash}"
       syntax = "[#{hash['syntax'].first}]"
+      syntax.gsub!(/image/, "plane")
 
       json[image_filename] = {
         syntax: syntax,
